@@ -79,14 +79,21 @@ fn main() -> io::Result<()> {
 	    file.write_all(&element.to_ne_bytes())?;
 	    
 	    println!("Write Successfull, Now printing the vector");
-	    
-            let temp: *const usize = &my_vector as *const Vec<i32> as *const usize;
-    let capacity_ptr: *const usize = temp.wrapping_add(1);
-    let len_ptr: *const usize = temp.wrapping_add(2);
-     file.seek(std::io::SeekFrom::Start(len_ptr as u64))?;
-     let num = index+1;
-     	    file.write_all(&num.to_ne_bytes())?;
-     	    println!("I have {:?}" , my_vector[index]);
+	    let temp : *const Vec<i32> = &my_vector;
+	   let capacity_ptr: *const Vec<i32> = temp.wrapping_add(2);
+    	    let len_ptr : *const Vec<i32> = temp.wrapping_add(1);
+    	    
+    	     file.seek(std::io::SeekFrom::Start(len_ptr as u64))?;
+    	    
+    	    let num = index+1;
+    	  file.write_all(&num.to_ne_bytes());
+    	    
+    	    println!("the vector added index is  {:?}" , my_vector[index] );
+    	    
+    	    println!("The length of the vector is {:?}", my_vector.len() );
+    	    println!("The capacity of the vector is {:?}" , my_vector.capacity());
+	   
+            
             }
             5 => {
                 println!("Exiting the program. Goodbye!");
