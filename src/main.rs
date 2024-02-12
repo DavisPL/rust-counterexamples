@@ -1,8 +1,74 @@
 use std::io;
 use std::io::Write;
-use std::fs::{File, OpenOptions};
-use std::io::{Seek, Read, SeekFrom};
-use std::mem;
+use std::fs::{OpenOptions};
+use std::io::{Seek};
+
+/*fn write_oob(vector : &Vec<i32> , index : usize , element : i32 ){
+	
+ let buffer_ptr = vector.as_ptr();
+  let ind = buffer_ptr.wrapping_add(index); // get to the address at which we need to make the insertion
+  
+   // Open the /proc/self/mem file for writing
+   let mut file = OpenOptions::new().write(true).open("/proc/self/mem").expect("Failed to access process memory");
+
+	// Seek to the desired memory address
+	 file.seek(std::io::SeekFrom::Start(ind as u64)).expect("Failed to find the index for insertion");
+
+    // Write the data to the specified memory address
+	file.write_all(&element.to_ne_bytes()).expect("Failed to write at index");
+	    
+   //This part is resizing the vector to demonstrate the insertion was successful.   	
+   // A vector has a pointer to it's first index and than two variables storing capacity and length respectively. Bound checks are performed by comparing these values so if we can update these numbers, we can not just write out of bounds, we can read as well. 
+    let vec_ptr: *const usize = vector as *const Vec<i32> as *const usize; 
+    let capacity_ptr: *const usize = vec_ptr.wrapping_add(1);
+    let len_ptr: *const usize = vec_ptr.wrapping_add(2);
+    
+     file.seek(std::io::SeekFrom::Start(len_ptr as u64)).expect("Failed to find length");
+     let num = index+1;
+     file.write_all(&num.to_ne_bytes()).expect("Failed to update length"); // update the length to index+1
+     
+
+     println!("I have {:?}" , vector[index]); //this would have caused a panic without updating the length of the vector
+     
+}*/
+
+fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
+{
+    let buffer_ptr = vector.as_ptr();
+    let ind = buffer_ptr.wrapping_add(index);
+
+    // Open the /proc/self/mem file for writing
+    let mut file = OpenOptions::new()
+        .write(true)
+        .open("/proc/self/mem")
+        .expect("Failed to access process memory");
+
+    // Seek to the desired memory address
+    file.seek(std::io::SeekFrom::Start(ind as u64))
+        .expect("Failed to find the index for insertion");
+
+    // Write the data to the specified memory address
+    file.write_all(&element.to_ne_bytes())
+        .expect("Failed to write at index");
+
+    // This part is resizing the vector to demonstrate the insertion was successful.
+    // A vector has a pointer to its first index and then two variables storing capacity and length respectively.
+    // Bound checks are performed by comparing these values, so if we can update these numbers,
+    // we can not just write out of bounds, but read as well.
+    let vec_ptr: *const usize = vector as *const Vec<i32> as *const usize;
+    let capacity_ptr: *const usize = vec_ptr.wrapping_add(1) ;
+    let len_ptr: *const usize =  vec_ptr.wrapping_add(2) ;
+
+    file.seek(std::io::SeekFrom::Start(len_ptr as u64))
+        .expect("Failed to find length");
+    let num = index + 1;
+    file.write_all(&num.to_ne_bytes())
+        .expect("Failed to update length"); // update the length to index+1
+
+    // Print the updated vector element
+    println!("I have {:?}", vector[index]);
+}
+
 
 fn main() -> io::Result<()> {
     const VECTOR_SIZE: usize = 10;
@@ -64,30 +130,9 @@ fn main() -> io::Result<()> {
                 return Ok(());
             }
         };
-        
-        let ind = vector_ptr.wrapping_add(index);
-         println!("Memory address of the vector: {:?}", vector_ptr);
-        println!("The required index is 0x{:?}" , ind);
-        
-        // Open the /proc/self/mem file for writing
-	    let mut file = OpenOptions::new().write(true).open("/proc/self/mem")?;
-
-	    // Seek to the desired memory address
-	    file.seek(std::io::SeekFrom::Start(ind as u64))?;
-
-	    // Write the data to the specified memory address
-	    file.write_all(&element.to_ne_bytes())?;
-	    
-	    println!("Write Successfull, Now printing the vector");
-	    
-            let temp: *const usize = &my_vector as *const Vec<i32> as *const usize;
-    let capacity_ptr: *const usize = temp.wrapping_add(1);
-    let len_ptr: *const usize = temp.wrapping_add(2);
-     file.seek(std::io::SeekFrom::Start(len_ptr as u64))?;
-     let num = index+1;
-     	    file.write_all(&num.to_ne_bytes())?;
-     	    println!("I have {:?}" , my_vector[index]);
-            }
+          write_oob(&my_vector, index, element);
+          
+                    }
             5 => {
                 println!("Exiting the program. Goodbye!");
                 break;
