@@ -9,4 +9,4 @@ edition = "2021"
 tempfile = "3.2.0"
 nix = "0.23.0"
 byteorder = "1.4.3"
-
+cc = "1.0.83"
