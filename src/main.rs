@@ -1,3 +1,5 @@
+//https://github.com/rust-lang/rust/issues/114728
+
 type Static<'a> = &'static &'a ();
 trait Extend<'a> {
     fn extend(self, _: &'a str) -> &'static str;
