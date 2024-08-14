@@ -1,3 +1,7 @@
+'''
+Requires Nightly Rust to run
+'''
+
 #![feature(trait_upcasting)]
 
 pub trait SupSupA {

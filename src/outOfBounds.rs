@@ -1,3 +1,6 @@
+'''
+Works on Linux
+'''
 fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
 {
     let buffer_ptr = vector.as_ptr();

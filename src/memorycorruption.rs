@@ -1,3 +1,6 @@
+'''
+Works on Linux
+'''
 pub fn write_to_memory(x: *const i32, value: usize) -> Result<()> {
 	    let mut file = OpenOptions::new().write(true).open("/proc/self/mem")?;
 

@@ -1,3 +1,10 @@
+'''
+Requires nightly Rust to run
+
+The bug was patched on January 22, 2024 and is no longer
+present as of Rust 1.82.0
+'''
+
 #![feature(arbitrary_self_types)]
 
 trait Static<'a> {
