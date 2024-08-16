@@ -1,3 +1,7 @@
+'''
+requires sudo access
+uses gdb to update the value at the memory address
+'''
 pub fn write_to_memory<T : std::fmt::Display >(x: *const T, value: T) -> Result<()> {
     let pid = std::process::id();
     let address = x as usize;

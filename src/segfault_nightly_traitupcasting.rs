@@ -1,5 +1,6 @@
 '''
 Requires Nightly Rust to run
+https://github.com/rust-lang/rust/issues/120222
 '''
 
 #![feature(trait_upcasting)]
