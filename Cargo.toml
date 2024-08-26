@@ -1,5 +1,5 @@
 [package]
-name = "Broken-Rust"
+name = "rust-counterexamples"
 version = "0.1.0"
 edition = "2021"
 
