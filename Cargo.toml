@@ -1,12 +1,6 @@
 [package]
-name = "vulnerableExample"
+name = "Broken-Rust"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-tempfile = "3.2.0"
-nix = "0.23.0"
-byteorder = "1.4.3"
-cc = "1.0.83"

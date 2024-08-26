@@ -1,6 +1,10 @@
-'''
+/*
 Works on Linux
-'''
+*/
+
+use std::fs::OpenOptions;
+use std::io::{Write,Seek};
+
 fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
 {
     let buffer_ptr = vector.as_ptr();
@@ -38,3 +42,17 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
     println!("I have {:?}", vector[index]);
 }
 
+fn main()
+{
+    let v = vec!{1,2,3};
+    let element :i32 = 1000;
+
+    let index: usize = 10;
+
+    println!("Vector before calling the funciton {:?}" , v);
+
+    write_oob(&v, index, element);
+
+    println!("Vector after calling the funciton {:?}" , v);
+
+}
