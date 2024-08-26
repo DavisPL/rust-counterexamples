@@ -8,7 +8,7 @@ fn main() {
         println!("{}", VALS[i]);
         if VALS[i] != 0 {
             println!("NON-ZERO: {}", VALS[i]);
-            return
+            return;
         }
     }
 }

