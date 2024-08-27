@@ -8,7 +8,7 @@ use std::io::{Result, Write};
 use std::process;
 use std::process::{Command, Stdio};
 
-const RUN_FLAG : bool = false;
+const RUN_FLAG: bool = false;
 
 pub fn write_to_memory<T: std::fmt::Display>(x: *const T, value: T) -> Result<()> {
     let pid = std::process::id();
@@ -45,12 +45,13 @@ pub fn write_to_memory<T: std::fmt::Display>(x: *const T, value: T) -> Result<()
 }
 
 fn main() -> Result<()> {
-
-    if ! RUN_FLAG{
+    if !RUN_FLAG {
         println!("This code example requires gdb and sudo privileges.");
         println!("This code spawns a new process using gdb, attaches to the existing process, and updates memory at a given location");
         println!("The file has been disabled to prevent any accidental execution.");
-        println!("You will need to manuallay change the RUN_FLAG in gdb_sudo.rs to true to execute it.");
+        println!(
+            "You will need to manuallay change the RUN_FLAG in gdb_sudo.rs to true to execute it."
+        );
         process::exit(1);
     }
 

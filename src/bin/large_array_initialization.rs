@@ -1,6 +1,9 @@
 /*
 https://github.com/rust-lang/rust/issues/121868
 */
+
+#[allow(clippy::needless_range_loop)]
+
 static VALS: [u8; 1024 * 1024 * 1024 * 4] = [0u8; 1024 * 1024 * 1024 * 4];
 
 fn main() {

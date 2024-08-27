@@ -2,7 +2,7 @@ use std::fs::OpenOptions;
 use std::io::{Seek, Write};
 use std::process;
 
-const RUN_FLAG : bool = false;
+const RUN_FLAG: bool = false;
 
 fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
     let buffer_ptr = vector.as_ptr();
@@ -40,11 +40,10 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
 }
 
 fn main() {
-
-    if ! RUN_FLAG{
+    if !RUN_FLAG {
         println!("This code example works on Linux.");
         println!("It performs a memory safety violation in Safe Rust using /proc/self/mem.");
-		println!("It performs and out of bounds read and write.");
+        println!("It performs and out of bounds read and write.");
         println!("This file has been disabled to prevent any accidental execution.");
         println!("You will need to manuallay change the RUN_FLAG in proc_self_mem_2.rs to true to execute it.");
         process::exit(1);

