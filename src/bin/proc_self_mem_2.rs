@@ -1,9 +1,8 @@
-/*
-Works on Linux
-*/
-
 use std::fs::OpenOptions;
 use std::io::{Seek, Write};
+use std::process;
+
+const RUN_FLAG : bool = false;
 
 fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
     let buffer_ptr = vector.as_ptr();
@@ -28,7 +27,6 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
     // Bound checks are performed by comparing these values, so if we can update these numbers,
     // we can not just write out of bounds, but read as well.
     let vec_ptr: *const usize = vector as *const Vec<i32> as *const usize;
-    let len_ptr: *const usize = vec_ptr.wrapping_add(1);
     let capacity_ptr: *const usize = vec_ptr.wrapping_add(2);
 
     file.seek(std::io::SeekFrom::Start(capacity_ptr as u64))
@@ -42,6 +40,16 @@ fn write_oob(vector: &Vec<i32>, index: usize, element: i32) {
 }
 
 fn main() {
+
+    if ! RUN_FLAG{
+        println!("This code example works on Linux.");
+        println!("It performs a memory safety violation in Safe Rust using /proc/self/mem.");
+		println!("It performs and out of bounds read and write.");
+        println!("This file has been disabled to prevent any accidental execution.");
+        println!("You will need to manuallay change the RUN_FLAG in proc_self_mem_2.rs to true to execute it.");
+        process::exit(1);
+    }
+
     let v = vec![1, 2, 3];
     let element: i32 = 1000;
 

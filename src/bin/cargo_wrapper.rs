@@ -14,6 +14,9 @@ use std::path::{Path, PathBuf};
 use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
+use std::process;
+
+const RUN_FLAG :bool = false;
 
 fn locate_cargo_bin() -> Option<PathBuf> {
     // Retrieve the PATH environment variable
@@ -45,9 +48,22 @@ fn locate_cargo_bin() -> Option<PathBuf> {
     None
 }
 fn main() -> std::io::Result<()> {
-    unsafe {
-        println!("hello world, you are under attack");
-    } // MARKER
+
+    if ! RUN_FLAG{
+        println!("This code example shows how build time effects can be exploited.");
+        println!("This code example builds a wrapper around the rust compiler.");
+        println!("The modified compiler can then modify all furture target code files, compiles them, and execute,"); 
+        println!("and then reverts the file to its original state while preserving file metadata such as timestamps.");
+        println!("From a user perspective nothing happened, but the file that got excuted is different than the intended one");
+        println!("To truly demonstrate this example this code example should be present in a file named build.rs");
+        println!("For safety reasons, it has been placed in bin and disabled.");
+        println!("To unable the file, you will have to manually update the RUN_FlAG to true in cargo_wrapper.rs");
+        println!("To revert the changes from wrapper, the possible solutions are :");
+        println!("1) move the file named cargo in cargo/bin/.compiler back to cargo/bin and delete the .compiler directory");
+        println!("2) reinstall the rust compiler and delete the .compiler directory in cargo/bin");
+        process::exit(1);
+    }
+
 
     let cargo_path = match locate_cargo_bin() {
         Some(path) => path,
