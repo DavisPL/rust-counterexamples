@@ -32,11 +32,12 @@ To run the examples in this repository, you will need the following dependencies
 
 ## Running the code examples 
 
-To run `proc_self_mem_1` you should run the following command on your terminal 
-
-    ```sh
-    cargo run --bin proc_self_mem_1
-    ```
+To run `proc_self_mem_1` you should run the following command on your terminal.
+    
+```sh
+cargo run --bin proc_self_mem_1
+```
+        
 
 For security reasons, all of these files have been disabled be default to prevent accidental execution. You will need to manually update the `RUN_FLAG` to `true` in the concerned file, to be able to run it. 
 **Note:** `cargo_wrapper.rs` can modify the compiler on your system. You can find instructions in the same file to revert the changes. 
@@ -87,7 +88,7 @@ For the paper *Counterexamples in Safe Rust*: [LINK_TO_PAPER].
 
 ## Contributing
 
-We welcome contributions to this repository. Please follow the standard [Rust community guidelines](https://www.rust-lang.org/community) and adhere to the project's [code of conduct](CODE_OF_CONDUCT.md).
+We welcome contributions to this repository. Please follow the standard [Rust community guidelines](https://www.rust-lang.org/community).
 
 ### How to Contribute
 
