@@ -30,18 +30,18 @@ To run the examples in this repository, you will need the following dependencies
 - **Cargo.toml** and **Cargo.lock**: Rust package files documenting required dependencies.
 - **README.md**: This file.
 
-## Running the code examples 
+### Running the Examples
 
-To run `proc_self_mem_1` you should run the following command on your terminal.
-    
+For security reasons, all of the code files have been disabled by default to prevent accidental execution. You will need to manually update the `RUN_FLAG` to `true` in the concerned file to be able to run it.
+
+**Note:** `cargo_wrapper.rs` can modify the compiler on your system. Please exercise caution when running this file. Instructions to revert any changes made by `cargo_wrapper.rs` can be found within the same file.
+
+After enabling the desired example (`proc_self_mem_1` in this case), you can run it using:
+
 ```sh
 cargo run --bin proc_self_mem_1
 ```
-        
-
-For security reasons, all of these files have been disabled be default to prevent accidental execution. You will need to manually update the `RUN_FLAG` to `true` in the concerned file, to be able to run it. 
-**Note:** `cargo_wrapper.rs` can modify the compiler on your system. You can find instructions in the same file to revert the changes. 
-
+    
 ### Tables from the Paper
 
 Below are key tables from the paper *Counterexamples in Safe Rust*. These tables show the evaluation of various tools and patterns within the scope of Rust's safety:
