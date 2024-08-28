@@ -80,8 +80,8 @@ Below are key tables from the paper *Counterexamples in Safe Rust*. These tables
 
 This repository is maintained by:
 
-- **Author Name 1**: [mhassnain@ucdavis.edu]
-- **Author Name 2**: [cdstanford@ucdavis.edu]
+- **Muhammad Hassnain**: [mhassnain@ucdavis.edu]
+- **Caleb Stanford**: [cdstanford@ucdavis.edu]
 
 For the paper *Counterexamples in Safe Rust*: [LINK_TO_PAPER].
 
