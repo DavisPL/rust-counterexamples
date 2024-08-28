@@ -30,7 +30,7 @@ To run the examples in this repository, you will need the following dependencies
 - **Cargo.toml** and **Cargo.lock**: Rust package files documenting required dependencies.
 - **README.md**: This file.
 
-### Running the Examples
+## Running the Examples
 
 For security reasons, all of the code files have been disabled by default to prevent accidental execution. You will need to manually update the `RUN_FLAG` to `true` in the concerned file to be able to run it.
 
@@ -63,7 +63,7 @@ Below are key tables from the paper *Counterexamples in Safe Rust*. These tables
 
 *Description: This table provides a comprehensive evaluation of tools on different attack patterns described in the paper and two additional examples. It includes the corresponding CWEs, related attack patterns, and the output from existing verification and analysis tools.*
 
-#### Table 2: Frequency of Attack Patterns
+### Table 2: Frequency of Attack Patterns
 
 | **Attack Pattern**       | **Top 500 Crates** | **Random 500 Crates** | **RustSec** | **rustdecimal** |
 |--------------------------|--------------------|-----------------------|-------------|-----------------|
