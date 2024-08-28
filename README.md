@@ -12,7 +12,7 @@ This repository contains the artifact for the paper *Counterexamples in Safe Rus
 
 To run the examples in this repository, you will need the following dependencies:
 
-- **Rust and Cargo**: Follow the instructions [here]([https://rustup.rs/](https://www.rust-lang.org/tools/install)) to install Rust and Cargo.
+- **Rust and Cargo**: Follow the instructions [here](https://www.rust-lang.org/tools/install) to install Rust and Cargo.
 - **Additional dependencies**: GDB, rust-nightly
 
 ## Installation
