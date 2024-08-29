@@ -23,6 +23,12 @@ To run the examples in this repository, you will need the following dependencies
     git clone https://github.com/DavisPL/rust-counterexamples.git
     cd rust-counterexamples
     ```
+2. Building the project 
+
+    ```sh 
+    cargo build 
+    ```
+This will compile all binaries defined in this repository. 
 
 ## Repository Structure
 
@@ -100,13 +106,10 @@ We welcome contributions to this repository. Please follow the standard [Rust co
 
 ## Citing this Repository
 
-If you use this repository in your research or work, please cite it as follows:
+If you would like to cite this repository, please refer to our upcoming publication. The details of the paper are currently being finalized and will be made available soon:
 
-```plaintext
-@article{yourpaper2023,
-  title={Counterexamples in Safe Rust},
-  author={Your Name and Co-author's Name},
-  journal={Conference Name},
-  year={2023},
-  publisher={Publisher Name}
-}
+Counterexamples in Safe Rust. Muhammad Hassnain and Caleb Stanford (2024). Details forthcoming.
+
+Alternatively, you may cite the repository directly:
+
+Counterexamples in Safe Rust. Muhammad Hassnain and Caleb Stanford. GitHub repository (2024). [GitHub Link](https://github.com/DavisPL/rust-counterexamples)
