@@ -26,7 +26,8 @@ To run the examples in this repository, you will need the following dependencies
 
 ## Repository Structure
 
-- **src/bin/**: Contains the source code for all the examples.
+- **src/bin/**: Contains the source code for all the examples that compile on the current version of Rust.
+- **examples/**: Contains examples that require a previous and/or nightly version of Rust.
 - **Cargo.toml** and **Cargo.lock**: Rust package files documenting required dependencies.
 - **README.md**: This file.
 
@@ -41,7 +42,7 @@ After enabling the desired example (`proc_self_mem_1` in this case), you can run
 ```sh
 cargo run --bin proc_self_mem_1
 ```
-    
+
 ### Tables from the Paper
 
 Below are key tables from the paper *Counterexamples in Safe Rust*. These tables show the evaluation of various tools and patterns within the scope of Rust's safety:
