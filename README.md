@@ -113,3 +113,7 @@ Counterexamples in Safe Rust. Muhammad Hassnain and Caleb Stanford (2024). Detai
 Alternatively, you may cite the repository directly:
 
 Counterexamples in Safe Rust. Muhammad Hassnain and Caleb Stanford. GitHub repository (2024). [GitHub Link](https://github.com/DavisPL/rust-counterexamples)
+
+## Related projects
+
+Some related projects include [Cargo Scan](https://github.com/PLSysSec/cargo-scan) (UC Davis and UC San Diego) and [Cargo Vet](https://github.com/mozilla/cargo-vet) (Mozilla).
