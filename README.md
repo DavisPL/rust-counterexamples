@@ -116,4 +116,8 @@ Counterexamples in Safe Rust. Muhammad Hassnain and Caleb Stanford. GitHub repos
 
 ## Related projects
 
-Some related projects include [Cargo Scan](https://github.com/PLSysSec/cargo-scan) (UC Davis and UC San Diego) and [Cargo Vet](https://github.com/mozilla/cargo-vet) (Mozilla).
+Some related projects include:
+
+* [cve-rs](https://github.com/Speykious/cve-rs)
+* [Cargo Scan](https://github.com/PLSysSec/cargo-scan) (UC Davis and UC San Diego)
+* [Cargo Vet](https://github.com/mozilla/cargo-vet) (Mozilla).
